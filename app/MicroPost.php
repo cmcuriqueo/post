@@ -9,7 +9,7 @@ class MicroPost extends Model
     protected $fillable = [
         'title', 'body', 'user_id'
     ];
-    protected $table = 'micropost';
+    protected $table = 'microposts';
 
     public function user()
     {

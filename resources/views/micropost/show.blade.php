@@ -18,16 +18,15 @@
 	  
 	</div>
 </div>
-@section('script')
-	<script type="text/javascript">
-	  function show(id){
-	          $.get( "micropost/" + id, function( data ) {
-	          	$( "#bodyModalShow" ).empty();
-	            $( "#bodyModalShow" ).append( "<h4 style='text-align: center'>"+data.title+"</h4>" );
-	            $( "#bodyModalShow" ).append( "<p style='text-align: center'>"+data.title+"</p>" );
-	            $("#myModalShow").modal();
-	          });
-	           
-	  }
-	</script>
-@endsection
+
+<script type="text/javascript">
+    function show(id){
+            $.get( "micropost/" + id, function( data ) {
+              $( "#bodyModalShow" ).empty();
+              $( "#bodyModalShow" ).append( "<h4 style='text-align: center'>"+data.title+"</h4>" );
+              $( "#bodyModalShow" ).append( "<p style='text-align: center'>"+data.title+"</p>" );
+              $("#myModalShow").modal();
+            });
+             
+    }
+</script>

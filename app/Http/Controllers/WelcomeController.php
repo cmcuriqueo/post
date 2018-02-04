@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\MicroPost;
 
@@ -13,7 +14,10 @@ class WelcomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('welcome', ['microposts' => MicroPost::all()]);
+    {	
+    	if(Auth::check())
+			return redirect('/home');
+    	else
+        	return view('welcome', ['microposts' => MicroPost::all()]);
     }
 }

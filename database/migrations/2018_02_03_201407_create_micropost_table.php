@@ -13,7 +13,7 @@ class CreateMicropostTable extends Migration
      */
     public function up()
     {
-        Schema::create('micropost', function (Blueprint $table) {
+        Schema::create('microposts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->string('body');

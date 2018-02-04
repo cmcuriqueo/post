@@ -9,42 +9,38 @@
 				<h4 class="modal-title"><h3 id="titleModal">Destroy Post</h3></h4>
 			</div>
 			<div class="modal-body" id="bodyModalDestroy">
-
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<button type="button" class="btn btn-warning" onClick="confirmDestroy()">Confirmar</button>
 			</div>
-		</div>
-	  
+		</div> 
 	</div>
 </div>
-@section('script')
-	<script type="text/javascript">
 
-	  var idPost = null;
+<script type="text/javascript">
+    var postId = null;
+    //se obtiene el recurso
+    function destroy(id){
+        postId = id;
+          $.get( "micropost/" + id, function( data ) {
+              $( "#bodyModalDestroy" ).empty();
+              $( "#bodyModalDestroy" ).append(
+                "<p>you are sure to eliminate: <strong>"+data.title+"</strong>?</p>");
+              $("#myModalDestroy").modal(); 
+          });
+    }
 
-	  function destroy(id){
-	  		idPost = id;
-	        $.get( "micropost/" + id, function( data ) {
-	            $( "#bodyModalDestroy" ).empty();
-	            $( "#bodyModalDestroy" ).append(
-	            	"<p>Esta seguro de eliminar: <strong>"+data.title+"</strong></p>");
-	            $("#myModalDestroy").modal(); 
-	        });
-	  }
-
-	  function confirmDestroy(){
-		$.ajax({
-		    url: 'micropost/'+idPost,
-		    type: 'DELETE',
-			headers: {
-			    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-			}).done(function(result) {
-		        $('#myModalDestroy').modal('hide');
-		        getMicroPost();
-		    });
-	  }
-	</script>
-@endsection
+    function confirmDestroy(){
+    $.ajax({
+	        url: 'micropost/'+postId,
+	        type: 'DELETE',
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+      	}).done(function(result) {
+            $('#myModalDestroy').modal('hide');
+            getMicroPost();
+        });
+    }
+</script>

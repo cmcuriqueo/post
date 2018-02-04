@@ -40,6 +40,10 @@ class MicroPostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|unique:microposts|min:6|max:35',
+            'body' => 'required|min:10|max:75'
+        ]);
         $micropost = MicroPost::create(
             ['title' => $request->title, 
             'body' => $request->body, 
@@ -81,6 +85,10 @@ class MicroPostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'title' => 'required|min:6|max:35|unique:microposts,title,'.$id,
+            'body' => 'required|min:10|max:75'
+        ]);
         MicroPost::where('id', $id)->update(['title' => $request->title, 'body' => $request->body]);
         return response(null, Response::HTTP_OK); 
     }
