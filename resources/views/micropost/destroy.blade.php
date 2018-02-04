@@ -19,30 +19,32 @@
 	  
 	</div>
 </div>
+@section('script')
+	<script type="text/javascript">
 
-<script type="text/javascript">
+	  var idPost = null;
 
-  var idPost = null;
+	  function destroy(id){
+	  		idPost = id;
+	        $.get( "micropost/" + id, function( data ) {
+	            $( "#bodyModalDestroy" ).empty();
+	            $( "#bodyModalDestroy" ).append(
+	            	"<p>Esta seguro de eliminar: <strong>"+data.title+"</strong></p>");
+	            $("#myModalDestroy").modal(); 
+	        });
+	  }
 
-  function destroy(id){
-  		idPost = id;
-        $.get( "micropost/" + id, function( data ) {
-            $( "#bodyModalDestroy" ).empty();
-            $( "#bodyModalDestroy" ).append(
-            	"<p>Esta seguro de eliminar: <strong>"+data.title+"</strong></p>");
-            $("#myModalDestroy").modal(); 
-        });
-  }
-
-  function confirmDestroy(){
-	$.ajax({
-	    url: 'micropost/'+idPost,
-	    type: 'DELETE',
-		headers: {
-		    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-		}).done(function(result) {
-	        $('#myModalDestroy').modal('hide');
-	    });
-  }
-</script>
+	  function confirmDestroy(){
+		$.ajax({
+		    url: 'micropost/'+idPost,
+		    type: 'DELETE',
+			headers: {
+			    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+			}).done(function(result) {
+		        $('#myModalDestroy').modal('hide');
+		        getMicroPost();
+		    });
+	  }
+	</script>
+@endsection

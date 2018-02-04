@@ -9,18 +9,9 @@
 				<h4 class="modal-title"><h3 id="titleModal">Edit Post</h3></h4>
 			</div>
 			<div class="modal-body" id="bodyModalEdit">
-				{!! Form::open(['route' => 'micropost.store', "name" => "createPost"]) !!}
-
-				<div class="form-group">
-				{!! Form::text('title', null, ["class" => "form-control", "id" => "title"]) !!}
-				</div>
-
-				<div class="form-group">
-				{!! Form::textarea('body', null,
-				['class'=>'form-control', 'placeholder'=>'Body', "id" => "body"])
-				!!}
-				</div>
-
+				<form>
+					@include('micropost.partials.form')
+				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -30,32 +21,33 @@
 	  
 	</div>
 </div>
+@section('script')
+	<script type="text/javascript">
+	  var postId = null;
+	  function edit(id){
+	  		 postId = id;
+	          $.get( "micropost/" + id, function( data ) {
+	          	$( "#bodyModal" ).empty()
+	            $( "#title" ).val(data.title);
+	            $( "#body" ).val(data.body);
+	            console.log('todo bien')
+	            $("#myModalEdit").modal();
+	          });
+	  }
+	  function confirmEdit(e){
 
-<script type="text/javascript">
-  var postId = null;
-  function edit(id){
-  		 postId = id;
-          $.get( "micropost/" + id, function( data ) {
-          	$( "#bodyModal" ).empty()
-            $( "#title" ).val(data.title);
-            $( "#body" ).val(data.body);
-            $("#myModalEdit").modal();
-          });
-  }
-  function confirmEdit(e){
-
-		var formData = {"title": $( "#title" ).val(), "body": $( "#body" ).val()};
-        $.ajax({
-            url: "micropost/" + postId,
-            method: "PATCH",
-			headers: {
-			    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-            data: formData,
-            dataType: 'json'
-        }).done(function(result){
-        	$('#myModalEdit').modal('hide');
-        });
-  }
-
-</script>
+			var formData = {"title": $( "#title" ).val(), "body": $( "#body" ).val()};
+	        $.ajax({
+	            url: "micropost/" + postId,
+	            method: "PATCH",
+				headers: {
+				    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+	            data: formData
+	        }).done(function(result){
+	        	$('#myModalEdit').modal('hide');
+	        	getMicroPost();
+	        });
+	  }
+	</script>
+@endsection

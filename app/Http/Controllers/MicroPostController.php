@@ -41,7 +41,7 @@ class MicroPostController extends Controller
     public function store(Request $request)
     {
         $micropost = MicroPost::create(
-            ['titel' => $request->title, 
+            ['title' => $request->title, 
             'body' => $request->body, 
             'user_id' => Auth::id()]
         );
